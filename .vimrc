@@ -59,6 +59,7 @@ nnoremap <right> <nop>
 "Configuracion vim-airline
 
 let g:airline#extensions#tabline#enabled = 1
+set t_Co=256
 
 "Configuracion para gundo plugin
 set undofile 
