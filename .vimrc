@@ -1,5 +1,5 @@
 set nocompatible
-filetype off
+filetype plugin on 
 syntax on
 set encoding=utf8
 "Plugins con Vunble
@@ -16,17 +16,19 @@ Plugin 'dart-lang/dart-vim-plugin'
 Plugin 'kablamo/vim-git-log'
 Plugin 'tpope/vim-fugitive'
 
-"Plugin 'flazz/vim-colorschemes' 
  
 Plugin 'vim-airline/vim-airline' 
 Plugin 'vim-airline/vim-airline-themes' 
 Plugin 'scrooloose/nerdtree'
 Plugin 'pangloss/vim-javascript'
+"Permite mantener un historial de cambios"
 Plugin 'sjl/gundo.vim'
-
+"Cierra las comillas, parentisis y llaves
 Plugin 'Townk/vim-autoclose'
 
 Plugin 'vim-syntastic/syntastic'
+Plugin 'vimwiki/vimwiki'
+Plugin 'majutsushi/tagbar'
 
 call vundle#end()
 
@@ -56,6 +58,40 @@ inoremap <right> <nop>
 vnoremap <right> <nop>
 nnoremap <right> <nop>
 
+"Configuracion de Tagbar https://z0mbix.io/2016/09/04/ctag-support-for-terraform/
+nmap <F8> :TagbarToggle<CR>
+
+" Auto open the TagBar when file is supported
+
+nnoremap <silent> <leader>o :CtrlP<CR>
+nnoremap <silent> <leader>p :CtrlPTag<cr>
+"nnoremap <silent> <leader>b :CtrlPBuffer<cr>
+nnoremap <silent> <leader>l :CtrlPLine<cr>
+nnoremap <silent> <leader>b :TagbarToggle<CR>
+nnoremap <silent> ; :CtrlPBuffer<CR>
+
+" ctags/tagbar
+nnoremap <leader>f :ta<space>
+
+" Auto open the TagBar when file is supported
+autocmd FileType * nested :call tagbar#autoopen(0)
+
+let g:tagbar_compact = 1
+"let g:tagbar_width = 30
+"let g:tagbar_case_insensitive
+
+let g:tagbar_type_terraform = {  
+    \ 'ctagstype' : 'terraform',
+    \ 'kinds' : [
+    \ 'r:resources',
+    \ 'm:modules',
+    \ 'o:outputs',
+    \ 'v:variables',
+    \ 'f:tfvars'
+    \ ],
+    \ 'sort' : 0
+    \ }
+
 "Configuracion vim-airline
 
 let g:airline#extensions#tabline#enabled = 1
@@ -64,7 +100,7 @@ set t_Co=256
 "Configuracion para gundo plugin
 set undofile 
 set undodir=~/.vim/tmp/undo
-set history=8100
+set history=100
 set undolevels=100
 nnoremap <leader>u :GundoToggle<CR>
 let g:gundo_width=50
@@ -73,6 +109,12 @@ let g:gundo_right=1
 let g:gundo_preview_bottom=1
 let g:gundo_close_on_revert=1
 
+if has('python3')
+  let g:gundo_prefer_python3 = 1
+endif
+
+"Configuraciones
+set path+=**
 set list 
 set listchars=tab:>-
 setglobal noerrorbells     "Ningun parpadeo
@@ -110,7 +152,7 @@ set hidden		    " Hide buffers when they are abandoned
 set sidescrolloff=5
 set autochdir "
 
-set laststatus=2    "despliga barra de estatus
+set laststatus=2    "despliega barra de estatus
 set showtabline=2
 
 set cmdheight=2
